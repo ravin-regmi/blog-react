@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import logo from './logo.svg';
 
 export default function Navbar(props) {
 	// <a href="/"> Reload Page </a>
@@ -23,7 +24,7 @@ export default function Navbar(props) {
 		    </ul>
 		  </div>
 		  <p className="font-weight-bold" style={{margin:0}}>
-		  	<img style={{width:'30px'}} src="https://i.pinimg.com/236x/ba/84/1c/ba841cc07934b508458a7faea62141a8--film-industry-nepal.jpg" />
+		  	<img style={{width:'30px'}} src={logo} />
 		  	Hello {props.user.name}!
 		  </p>
 		</nav>

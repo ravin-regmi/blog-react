@@ -5,7 +5,7 @@ const AuthContext = React.createContext();
 
 const library = new Library();
 
-const userUrl = 'http://localhost:9000/users/';
+const userUrl = process.env.REACT_APP_API_URL + 'users/';
 
 function AuthProvider(props) {
 

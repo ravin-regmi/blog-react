@@ -11,10 +11,10 @@ import {AuthContext} from './context/Auth';
 const Users = React.lazy(() => import('./Users'));
 
 const url = {
-	posts: 'http://localhost:9000/posts',
-	comments: 'http://localhost:9000/comments',
-	tags: 'http://localhost:9000/tags',
-	users: 'http://localhost:9000/users',
+	posts: process.env.REACT_APP_API_URL + 'posts',
+	comments: process.env.REACT_APP_API_URL + 'comments',
+	tags: process.env.REACT_APP_API_URL + 'tags',
+	users: process.env.REACT_APP_API_URL + 'users',
 };
 
 const library = new Library(url);
