@@ -1,0 +1,8 @@
+[
+  {"id": 1, "postText": "First post", "display": true},
+  {"id": 2, "postText": "Second post", "display": true},
+  {"id": 3, "postText": "Another post in blog", "display": true},
+  {"id": 4, "postText": "Hello there", "display": true},
+  {"id": 5, "postText": "Fifth post posted", "display": true},
+  {"id": 6, "postText": "Tesing posts", "display": true}
+]
