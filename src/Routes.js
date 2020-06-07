@@ -10,6 +10,7 @@ import {AuthRoute, Login, Register, Logout} from './Auth';
 import {AuthProvider} from './context/Auth';
 
 export default function Routes(props) {
+	console.log("in route, api url = ", process.env.REACT_APP_API_URL)
 	return (
 		<AuthProvider>
 		<Router>
