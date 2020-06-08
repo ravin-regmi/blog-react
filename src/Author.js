@@ -17,7 +17,7 @@ export default function Author(props) {
 		<div className="font-weight-bold text-success author-name">
 			By - 
 			{
-				props.parent !== 'comment' 
+				(props.parent !== 'comment' && props.username) 
 					? (<Link to={`/user/${props.username}`}> {displayName} </Link>)
 					: (<span> {displayName} </span>)
 			}!

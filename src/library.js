@@ -53,8 +53,8 @@ class Library {
 		return  await fetchReq.json();
 	}
 
-	fetchPostRequest(url, data, cb) {
-		fetch(url, {
+	fetchPostRequest(url, data) {
+		return fetch(url, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ class Library {
 			body: JSON.stringify(data)
 		})
 		.then(response => response.json())
-		.then(result => { cb(result) })
+		.then(result => { return result; })
 		.catch(error => { console.log('fetch post error', error); });
 	}
 }

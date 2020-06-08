@@ -31,6 +31,7 @@ function Login(props) {
 	const [usernameErrMsg, setUsernameErrMsg] = useState('');
 	const [passwordErrMsg, setPasswordErrMsg] = useState('');
 	const [invalidErrMsg, setInvalidErrMsg] = useState('');
+	const [loadingDisplay, setLoadingDisplay] = useState('d-none');
 	const authUser = useAuth();
 	const referer = props.location.state ? props.location.state.referer : '/';
 	if (authUser.data) {
@@ -38,6 +39,8 @@ function Login(props) {
 	}
 
 	document.title = "Demo Blog Login";
+
+	// let loadingDisplay = 'd-none';
 
 	const usernameValueChange = e => {
 		setUsername(e.target.value);
@@ -59,7 +62,7 @@ function Login(props) {
 			valid = false;
 		} else {
 			removeErrorEffects(passwordFieldRef);
-			setPasswordErrMsg("");
+			setPasswordErrMsg('');
 		}
 		if (e.username === '') {
 			errorEffects(usernameFieldRef);
@@ -75,20 +78,23 @@ function Login(props) {
 
 	function postLogin(e) {
 		e.preventDefault();
+		setLoadingDisplay('');
 		const userData = {
 			username: usernameText.trim(),
 			password: passwordText
 		};
-		if (validateNotEmtpy(userData)) {
-			const login = authUser.login(userData);
-			if (!login) {
+		const cb = (data) => {
+			if (!data) {
+				if (usernameFieldRef.current)	usernameFieldRef.current.focus();
 				setInvalidErrMsg("Username or Password invalid");
 				setPassword('');
-				usernameFieldRef.current.focus();
+				setLoadingDisplay('d-none');
 			}
-			if (authUser.data) {
-				setLoggedIn(true);
-			}
+		};
+		if (validateNotEmtpy(userData)) {
+			authUser.login(userData, cb);
+		} else {
+			setLoadingDisplay('d-none');
 		}
 	}
 
@@ -114,6 +120,7 @@ function Login(props) {
 					</div>
 					<div className="post-submit">
 						<button type="submit" className="btn btn-primary">Login</button>
+						&nbsp;<span className={`text-info ${loadingDisplay}`}>Loading...</span>
 					</div>
 				</form>
 			</div>
@@ -135,6 +142,7 @@ function Register(props) {
 	const [usernameText, setUsername] = useState('');
 	const [passwordText, setPassword] = useState('');
 	const [isLoggedIn, setLoggedIn] = useState(false);
+	const [loadingDisplay, setLoadingDisplay] = useState('d-none');
 
 	const [nameErrMsg, setNameErrMsg] = useState('');
 	const [usernameErrMsg, setUsernameErrMsg] = useState('');
@@ -196,20 +204,24 @@ function Register(props) {
 
 	function registerSubmit(e) {
 		e.preventDefault();
+		setLoadingDisplay('');
 		const userData = {
 			name: nameText.trim(),
 			username: usernameText.trim(),
 			password: passwordText
 		}
-		const valid = validateNotEmtpy(userData);
-		if (valid) {
-			if (!authUser.register(userData)){
-				errorEffects(usernameFieldRef);
+		const cb = (data) => {
+			if (!data) {
+				if (usernameFieldRef.current)	usernameFieldRef.current.focus();
 				setUsernameErrMsg("Username already exist, try another username");
+				setPassword('');
+				setLoadingDisplay('d-none');
 			}
-			if (authUser.data) {
-				setLoggedIn(true);
-			}
+		}
+		if (validateNotEmtpy(userData)) {
+			authUser.register(userData, cb);
+		} else {
+			setLoadingDisplay('d-none');
 		}
 	}
 
@@ -239,6 +251,7 @@ function Register(props) {
 					</div>
 					<div className="post-submit">
 						<button type="submit" className="btn btn-primary">Register</button>
+						&nbsp;<span className={`text-info ${loadingDisplay}`}>Loading...</span>
 					</div>
 				</form>
 			</div>

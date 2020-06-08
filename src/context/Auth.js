@@ -12,23 +12,27 @@ function AuthProvider(props) {
 	const [data, setData] = useState(null);
 
 	const afterSave = data => {
-		console.log('after save')
-		if (!data.userData) {
-			return 'false';
-		} else {
+		if (data.userData) {
 			setData({user: data.userData});
-			return 'true';
 		}
 	};
 
-	const login = (userData) => {
-		console.log('start login')
-		library.fetchPostRequest(userUrl + 'login', userData, afterSave);
-		console.log('end login')
+	const login = (userData, cb) => {
+		library
+			.fetchPostRequest(userUrl + 'login', userData)
+			.then(data => {
+				afterSave(data);
+				cb(data.userData);
+			});
 	};
 
-	const register = (userData) => {
-		library.fetchPostRequest(userUrl, userData, afterSave);
+	const register = (userData, cb) => {
+		library
+			.fetchPostRequest(userUrl, userData)
+			.then(data => {
+				afterSave(data);
+				cb(data.userData);
+			});
 	};
 
 	const logout = () => {
